@@ -1,10 +1,11 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import sys
+import datetime
 
 import cv2
 import numpy as np
 
-from cyber_py import cyber
+from cyber_py3 import cyber
 from modules.sensors.proto.sensor_image_pb2 import Image
 # from modules.exercises.common.image_utils import reshape
 
@@ -15,20 +16,31 @@ class Exercise(object):
 
     def __init__(self, node):
         self.node = node
-        self.msg = Image()
+        # self.msg = Image()
 
         # TODO create reader
+        self.reader = self.node.create_reader('/realsense/color_image', Image, self.callback)
 
         # TODO create writer
-        
+        self.writer = self.node.create_writer('/realsense/color_image/compressed', Image)
 
     def callback(self, data):
         # TODO print frame number
+        print('Image frame number: {}'.format(data.frame_no))
+        # some other info
+        print('  Meta data:')
+        print('    Measurement time: {}'.format(data.measurement_time))
+        print('    Width: {}'.format(data.width))
+        print('    Height: {}'.format(data.height))
+        print('    Raw size: {}'.format(len(data.data)))
 
         # TODO api to reshape image
+        reshaped_image = self.reshape(data.data)
+        print('    Raw size: {}'.format(len(reshaped_image)))
 
         # TODO publish, write compressed image
-        pass
+        data.data = reshaped_image
+        self.writer.write(data)
 
     def reshape(self, data):
         """api to reshape and encodes image, you can call self.reshape(data)"""
