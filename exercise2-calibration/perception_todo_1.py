@@ -4,19 +4,18 @@ import numpy as np
 import cv2
 import time
 from modules.sensors.proto.sensor_image_pb2 import Image
-from cyber_py import cyber
+from cyber_py3 import cyber
 import sys
 
 sys.path.append("../")
 
 # roll
-src_corners = [[, ], [, ], [, ], [, ]]
+src_corners = np.float32([[281, 223], [415, 222], [264, 282], [453, 283]])
 
 # turn to
-dst_corners = [[, ], [, ], [, ], [, ]]
+dst_corners = np.float32([[264, 93], [453, 94], [264, 282], [453, 283]]) - np.float32([100, -100])
 
-M = cv2.getPerspectiveTransform(
-    np.float32(src_corners), np.float32(dst_corners))
+M = cv2.getPerspectiveTransform(src_corners, dst_corners)
 
 
 def perspective_transform(image, m, img_size=None):
@@ -31,6 +30,7 @@ class Exercise(object):
     def __init__(self, node):
         self.node = node
         self.msg = Image()
+        self.flag = 0
 
         # TODO create reader
         self.node.create_reader(
