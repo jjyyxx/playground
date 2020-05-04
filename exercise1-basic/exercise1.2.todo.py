@@ -1,7 +1,7 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """Exercise 1.2 write a control script, need to run with root
-1. sudo -s 
+1. sudo -s
 2. source /apollo/scripts/apollo_base.sh
 3. python or python3 run this script
 """
@@ -67,13 +67,13 @@ class Exercise(object):
                     if c:
                         # print("Got character", repr(c))
                         # TODO 3 update your logic by keyboad
-                        # if c == 'w': self.hotkey_w()
-                        # if c == 's': self.hotkey_s()
-                        # if c == 'a': self.hotkey_a()
-                        # if c == 'd': self.hotkey_d()
+                        if c == 'w': self.hotkey_w()
+                        if c == 's': self.hotkey_s()
+                        if c == 'a': self.hotkey_a()
+                        if c == 'd': self.hotkey_d()
                         print(self.msg)
                         # TODO 4 write control message to channel /control
-                        # self.writer.write(self.msg)
+                        self.writer.write(self.msg)
                         # ratio domain 100hz
                         time.sleep(0.01)
                 except IOError: pass

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import sys
 
@@ -12,9 +12,16 @@ sys.path.append("../")
 
 # TODO
 def translation_view(x, y):
+    a = 4.113e-6
+    b = -5.070e-4
+    c = 0.691
+    x_r = a * x + b * y + c
 
-    x_r = 0
-    y_r = 0
+    A = -4.904e-4
+    B = -1.393e-6
+    C = 0.1428
+    y_r = A * x + B * y + C
+
     return x_r, y_r
 
 
